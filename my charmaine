@@ -1,1 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You, Bae ❤️</title>
 
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    color: white;
+    background:
+        radial-gradient(circle at top, #451b48 0%, #1b0c22 48%, #08060c 100%);
+    overflow-x: hidden;
+}
+
+/* Floating hearts */
+.hearts {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.heart {
+    position: absolute;
+    bottom: -40px;
+    opacity: .25;
+    animation: floatHeart 8s linear infinite;
+}
+
+@keyframes floatHeart {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+
+    15% {
+        opacity: .3;
+    }
+
+    100% {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Main */
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    position: relative;
+    z-index: 2;
+}
+
+.card {
+    width: min(760px, 100%);
+    padding: 35px;
+    border-radius: 30px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 25px 80px rgba(0,0,0,.5);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.eyebrow {
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 11px;
+    color: #ff9dca;
+}
+
+h1 {
+    text-align: center;
+    font-size: clamp(35px, 7vw, 58px);
+    margin: 12px 0;
+}
+
+.subtitle {
+    text-align: center;
+    color: #ddd;
+    line-height: 1.7;
+    max-width: 600px;
+    margin: auto;
+}
+
+.pin-area {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+}
+
+input {
+    width: min(330px, 100%);
+    padding: 16px;
+    border-radius: 15px;
+    border: 1px solid rgba(255,255,255,.2);
+    background: rgba(0,0,0,.25);
+    color: white;
+    font-size: 17px;
+    text-align: center;
+    outline: none;
+}
+
+input:focus {
+    border-color: #ff91c5;
+    box-shadow: 0 0 0 4px rgba(255,145,197,.12);
+}
+
+button {
+    border: none;
+    border-radius: 15px;
+    padding: 15px 22px;
+    background: linear-gradient(135deg, #ff70b3, #ae4cff);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+    transition: .2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+.message {
+    text-align: center;
+    color: #ffb3d5;
+    font-weight: bold;
+    min-height: 30px;
+    margin-top: 15px;
+}
+
+.hint {
+    max-width: 580px;
+    margin: 18px auto;
+    padding: 15px;
+    border-radius: 18px;
+    background: rgba(255,180,220,.08);
+    border: 1px solid rgba(255,180,220,.12);
+    color: #eadde6;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.small {
+    text-align: center;
+    color: #999;
+    font-size: 12px;
+}
+
+/* Love section */
+.love {
+    text-align: center;
+}
+
+.big-heart {
+    font-size: 65px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    50% {
+        transform: scale(1.12);
+    }
+}
+
+.love h2 {
+    font-size: 36px;
+    margin: 5px 0 25px;
+}
+
+.love-text {
+    font-size: 18px;
+    line-height: 1.9;
+    color: #f5eaf0;
+}
+
+.divider {
+    height: 1px;
+    margin: 30px 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #f18bb9,
+        transparent
+    );
+}
+
+/* Game */
+.game h3 {
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+.game-description {
+    color: #ddd;
+    line-height: 1.6;
+}
+
+.game-area {
+    position: relative;
+    height: 320px;
+    margin-top: 20px;
+    border-radius: 22px;
+    overflow: hidden;
+    background: rgba(0,0,0,.25);
+    border: 1px solid rgba(255,255,255,.12);
+}
+
+.target {
+    position: absolute;
+    padding: 0;
+    background: none;
+    border: none;
+    font-size: 34px;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.target:hover {
+    transform: scale(1.2);
+    background: none;
+}
+
+.score {
+    text-align: center;
+    margin-top: 12px;
+    color: #ffb4d5;
+    font-weight: bold;
+}
+
+.thank-you {
+    margin-top: 25px;
+    padding: 22px;
+    border-radius: 20px;
+    background: linear-gradient(
+        135deg,
+        rgba(255,116,181,.13),
+        rgba(167,91,255,.12)
+    );
+    border: 1px solid rgba(255,255,255,.12);
+    line-height: 1.8;
+}
+
+.signature {
+    margin-top: 15px;
+    color: #ffafd1;
+    font-weight: bold;
+}
+
+/* Shake */
+.shake {
+    animation: shake .35s;
+}
+
+@keyframes shake {
+    25% { transform: translateX(-7px); }
+    50% { transform: translateX(7px); }
+    75% { transform: translateX(-4px); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="hearts" id="floatingHearts"></div>
+
+<div class="container">
+
+    <!-- PIN SCREEN -->
+    <div class="card" id="pinScreen">
+
+        <div class="eyebrow">
+            A little something from me to you
+        </div>
+
+        <h1>Before you come in… ❤️</h1>
+
+        <p class="subtitle">
+            There is one date I want you to remember.
+            The date that became one of the most unforgettable
+            pages of our story.
+        </p>
+
+        <div class="pin-area">
+
+            <input
+                type="password"
+                id="pinInput"
+                inputmode="numeric"
+                placeholder="Enter the secret PIN"
+            >
+
+            <button onclick="checkPin()">
+                Unlock ❤️
+            </button>
+
+        </div>
+
+        <div class="message" id="errorMessage"></div>
+
+        <div class="hint" id="hint">
+            Hint: Think about the day our story became
+            something more than just a story…
+        </div>
+
+        <p class="small">
+            Take your time. Some memories deserve to be remembered slowly. ❤️
+        </p>
+
+    </div>
+
+
+    <!-- AFTER UNLOCK -->
+    <div class="card hidden" id="loveScreen">
+
+        <div class="love">
+
+            <div class="big-heart">
+                ❤️
+            </div>
+
+            <div class="eyebrow">
+                You made it
+            </div>
+
+            <h2>
+                For My love love
+            </h2>
+
+            <div class="love-text">
+
+                <p>
+                    I still love you  more deeply than I always
+                    know how to show you.
+                </p>
+
+                <p>
+                    I know the past few months haven't always felt
+                    like the love you deserved, and I'm working on
+                    changing that.
+                </p>
+
+                <p>
+                    I don't want my fear, overthinking or mistakes
+                    to make you question how precious you are to me.
+                </p>
+
+                <p>
+                    I'm still here, still choosing you, and still
+                    grateful that our story is ours. ❤️
+                </p>
+
+            </div>
+
+
+            <div class="divider"></div>
+
+
+            <!-- GAME -->
+            <div class="game">
+
+                <h3>
+                    One tiny game for you 🎮
+                </h3>
+
+                <p class="game-description">
+                    Catch <b>10 hearts</b>.
+                    Every heart is one little reminder that you're loved.
+                </p>
+
+                <div
+                    class="game-area"
+                    id="gameArea">
+                </div>
+
+                <div
+                    class="score"
+                    id="score">
+                    Hearts caught: 0 / 10
+                </div>
+
+
+                <!-- FINAL MESSAGE -->
+                <div
+                    class="thank-you hidden"
+                    id="thankYou">
+
+                    <strong>
+                        Thank you for choosing to stay. ❤️
+                    </strong>
+
+                    <br><br>
+
+                    Thank you for staying even through the moments
+                    that were heavy, confusing and difficult.
+
+                    Thank you for giving us another chance to learn,
+                    grow and love each other better.
+
+                    I don't take your presence in my life for granted.
+
+                    <div class="signature">
+                        Your khutso ❤️
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   SECRET PIN
+   ========================================================= */
+
+const SECRET_PIN = "27april2026";
+
+let attempts = 0;
+
+
+/* =========================================================
+   PIN CHECK
+   ========================================================= */
+
+function checkPin() {
+
+    const input = document.getElementById("pinInput");
+    const error = document.getElementById("errorMessage");
+    const hint = document.getElementById("hint");
+    const screen = document.getElementById("pinScreen");
+
+    const entered = input.value
+        .trim()
+        .toLowerCase();
+
+
+    if (entered === SECRET_PIN) {
+
+        document
+            .getElementById("pinScreen")
+            .classList.add("hidden");
+
+        document
+            .getElementById("loveScreen")
+            .classList.remove("hidden");
+
+        heartExplosion();
+
+        return;
+    }
+
+
+    attempts++;
+
+    error.textContent =
+        "I knew you 😭😂 Try again.";
+
+
+    screen.classList.remove("shake");
+
+    void screen.offsetWidth;
+
+    screen.classList.add("shake");
+
+
+    const hints = [
+
+        "Hint: It happened in April… ❤️",
+
+        "Hint: Think about the date our story became one of the most unforgettable parts of my life.",
+
+        "Hint: The month is April. Now remember the exact day…",
+
+        "Hint: 27… ❤️"
+
+    ];
+
+
+    hint.textContent =
+        hints[Math.min(attempts - 1, hints.length - 1)];
+
+
+    input.value = "";
+
+    input.focus();
+}
+
+
+/* ENTER KEY */
+
+document
+    .getElementById("pinInput")
+    .addEventListener("keydown", function(event) {
+
+        if (event.key === "Enter") {
+            checkPin();
+        }
+
+    });
+
+
+/* =========================================================
+   FLOATING HEARTS
+   ========================================================= */
+
+const floatingHearts =
+    document.getElementById("floatingHearts");
+
+for (let i = 0; i < 20; i++) {
+
+    const heart =
+        document.createElement("span");
+
+    heart.className = "heart";
+
+    heart.textContent =
+        ["♥", "♡", "💗", "💕"][Math.floor(Math.random() * 4)];
+
+    heart.style.left =
+        Math.random() * 100 + "%";
+
+    heart.style.fontSize =
+        14 + Math.random() * 20 + "px";
+
+    heart.style.animationDelay =
+        Math.random() * 8 + "s";
+
+    floatingHearts.appendChild(heart);
+}
+
+
+/* =========================================================
+   HEART EXPLOSION
+   ========================================================= */
+
+function heartExplosion() {
+
+    for (let i = 0; i < 35; i++) {
+
+        const heart =
+            document.createElement("span");
+
+        heart.textContent = "❤️";
+
+        heart.style.position = "fixed";
+        heart.style.left = "50%";
+        heart.style.top = "50%";
+        heart.style.zIndex = "100";
+        heart.style.pointerEvents = "none";
+
+        heart.style.fontSize =
+            14 + Math.random() * 25 + "px";
+
+
+        const x =
+            (Math.random() - .5) * 700;
+
+        const y =
+            (Math.random() - .5) * 500;
+
+
+        heart.animate(
+
+            [
+                {
+                    transform:
+                        "translate(-50%, -50%) scale(.4)",
+                    opacity: 1
+                },
+
+                {
+                    transform:
+                        `translate(
+                            calc(-50% + ${x}px),
+                            calc(-50% + ${y}px)
+                        ) scale(1.2)`,
+                    opacity: 0
+                }
+            ],
+
+            {
+                duration:
+                    1200 + Math.random() * 800,
+
+                easing:
+                    "cubic-bezier(.2,.8,.2,1)"
+            }
+
+        );
+
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 2200);
+
+    }
+}
+
+
+/* =========================================================
+   MINI GAME
+   ========================================================= */
+
+let score = 0;
+
+const gameArea =
+    document.getElementById("gameArea");
+
+
+function spawnHeart() {
+
+    if (score >= 10) {
+        return;
+    }
+
+
+    const heart =
+        document.createElement("button");
+
+    heart.className = "target";
+
+    heart.textContent =
+        ["❤️", "💗", "💖", "💕"]
+        [Math.floor(Math.random() * 4)];
+
+
+    heart.style.left =
+        (5 + Math.random() * 85) + "%";
+
+    heart.style.top =
+        (8 + Math.random() * 78) + "%";
+
+
+    heart.onclick = function() {
+
+        score++;
+
+
+        document.getElementById("score")
+            .textContent =
+            `Hearts caught: ${score} / 10`;
+
+
+        heart.remove();
+
+
+        if (score >= 10) {
+
+            document
+                .getElementById("thankYou")
+                .classList
+                .remove("hidden");
+
+            heartExplosion();
+
+        } else {
+
+            spawnHeart();
+
+        }
+
+    };
+
+
+    gameArea.appendChild(heart);
+}
+
+
+/* Start game */
+
+spawnHeart();
+
+</script>
+
+</body>
+</html>
